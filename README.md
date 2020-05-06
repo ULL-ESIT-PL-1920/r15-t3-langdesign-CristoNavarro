@@ -22,23 +22,28 @@ Modifica la gramática corrigiendo los errores que veas, de manera que genere fr
               "if" <parenthesis> <block> ("else" "if" <block>)* ('else' <block>)? |
               "while" <parenthesis> <block> |
               'function' <word> '(' <word> (',' <word>)* ')' <block> |
-              <expr> ";"
+              <asig> ";"
               
 <declaration> ::= 'var' WORD ('=' <expr>)?
 
-<expr> ::= <term> (('==', '!=', '>', '>=', '<', '<=', '=') <term>)*
+<expr> ::= (<leftVal> '=')* <comp>
+
+<leftVal> ::= WORD ('.' WORD | '[' <expr> ']')*
+
+<comp> ::= <term> (('==', '!=', '>', '>=', '<', '<=') <term>)*
 
 <term> ::= <sum> (('+', '-') <sum>)*
 
 <sum> ::= <fact> (('*', '/') <fact>)*
-
-<fact> ::= <value> | <word> <apply> | <parenthesis> | <array> // Added by: Casiano
 
 <apply> ::= '(' <expr> (',' <expr>)* ')'<apply> | '.'<word><apply> | empty
 
 <array> ::= '[' ']' | '[' <expr> (',' <expr> )*] // Added by Casiano
 
 <parenthesis> ::= '(' <expr> ')'
+
+<fact> ::= (VALUE | WORD | <array> | <parenthesis>) ('.' WORD | '[' <expr> ']' | <apply>)*
+
 ```
 
 ## Tokens
